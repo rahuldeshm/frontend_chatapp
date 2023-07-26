@@ -1,5 +1,7 @@
+import Auth from "./components/Auth/Auth";
+
 function App() {
-  return <div>chat app</div>;
+  return <Auth />;
 }
 
 export default App;
