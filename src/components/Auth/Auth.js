@@ -6,7 +6,7 @@ import { FaHandPointRight } from "react-icons/fa";
 import classes from "./Layout.module.css";
 
 function Auth() {
-  const [active, setActive] = useState(true);
+  const [active, setActive] = useState(false);
   return (
     <div className={classes.main}>
       <div className={classes.auth}>

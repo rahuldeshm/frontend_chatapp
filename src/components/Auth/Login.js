@@ -1,24 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./Auth.module.css";
 import Forgotpass from "./Forgotpass";
+import image from "../../images/chat.png";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/authSlice";
 
 function Login() {
+  const [forgot, setForgot] = useState(false);
+  const dispatch = useDispatch();
+  const loginHandler = async (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    try {
+      const res = await fetch("http://localhost:3001/auth/signin", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data);
+        throw new Error({ message: data.message });
+      } else {
+        console.log(data);
+        dispatch(authActions.login(data));
+        localStorage.setItem("token", JSON.stringify(data));
+      }
+    } catch (err) {
+      alert(err.message);
+      console.log(err);
+    }
+  };
   return (
-    <div className="login">
-      <input type="checkbox" id="fpp" aria-hidden="true" checked="true" />
-      <form onsubmit="loginHandler(event)">
+    <div className={classes.chatmain}>
+      <img className={classes.img} src={image} alt="chatting logo" />
+      <h4>Log in</h4>
+      <form onsubmit={loginHandler}>
         <label for="chk" aria-hidden="true">
           Login
         </label>
+        <input type="email" name="email" placeholder="Email Address" required />
         <input
-          id="email"
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          required
-        />
-        <input
-          id="password"
           type="password"
           name="password"
           placeholder="Password"
@@ -26,8 +53,11 @@ function Login() {
         />
 
         <button type="submit">Login</button>
-        <Forgotpass />
       </form>
+      <a href="#" onClick={() => setForgot(!forgot)}>
+        Forgot Password
+      </a>
+      {forgot && <Forgotpass />}
     </div>
   );
 }

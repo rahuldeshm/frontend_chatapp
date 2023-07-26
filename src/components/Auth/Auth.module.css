@@ -43,6 +43,12 @@
 .chatmain button:hover {
   background: #7952c2;
 }
+.chatmain a {
+  color: #fff;
+  cursor: pointer;
+  padding: 0 5px;
+  background-color: rgba(0, 255, 221, 0.301);
+}
 .img {
   width: 25%;
 }
