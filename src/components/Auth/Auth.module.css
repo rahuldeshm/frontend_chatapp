@@ -11,7 +11,7 @@
   margin: 0px;
   color: rgb(180, 179, 179);
 }
-input {
+.chatmain input {
   width: 40vw;
   height: 20px;
   background: #e0dede;
@@ -23,7 +23,7 @@ input {
   outline: none;
   border-radius: 5px;
 }
-button {
+.chatmain button {
   width: 65%;
   height: 40px;
   background: #573b8a;
@@ -40,14 +40,14 @@ button {
   transition: 0.3s ease-in;
   cursor: pointer;
 }
-button:hover {
+.chatmain button:hover {
   background: #7952c2;
 }
 .img {
   width: 25%;
 }
 @media screen and (max-width: 700px) {
-  input {
+  .chatmain input {
     width: 70vw;
   }
   .disc {
