@@ -12,7 +12,6 @@ function Login() {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-
     try {
       const res = await fetch("http://localhost:3001/auth/signin", {
         method: "POST",
@@ -24,15 +23,14 @@ function Login() {
       });
       const data = await res.json();
       if (!res.ok) {
-        console.log(data);
-        throw new Error({ message: data.message });
+        throw new Error(data.message);
       } else {
         console.log(data);
         dispatch(authActions.login(data));
         localStorage.setItem("token", JSON.stringify(data));
       }
     } catch (err) {
-      alert(err.message);
+      alert(err);
       console.log(err);
     }
   };
@@ -40,10 +38,7 @@ function Login() {
     <div className={classes.chatmain}>
       <img className={classes.img} src={image} alt="chatting logo" />
       <h4>Log in</h4>
-      <form onsubmit={loginHandler}>
-        <label for="chk" aria-hidden="true">
-          Login
-        </label>
+      <form onSubmit={loginHandler}>
         <input type="email" name="email" placeholder="Email Address" required />
         <input
           type="password"

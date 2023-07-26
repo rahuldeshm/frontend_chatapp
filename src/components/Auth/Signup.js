@@ -29,14 +29,13 @@ function Signup() {
       });
       const data = await res.json();
       if (!res.ok) {
-        throw new Error({ message: data.message });
+        throw new Error(data.message);
       } else {
-        console.log(data);
         dispatch(authActions.login(data));
         localStorage.setItem("token", JSON.stringify(data));
       }
     } catch (err) {
-      alert(err.message);
+      alert(err);
       console.log(err);
     }
   };
