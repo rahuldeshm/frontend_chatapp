@@ -1,0 +1,19 @@
+.mainlay {
+  display: flex;
+}
+.manu,
+.messages {
+  box-sizing: border-box;
+  width: 50vw;
+  height: 100vh;
+  padding: 0px;
+  background-color: rgb(17, 27, 33);
+}
+@media screen and (max-width: 700px) {
+  .manu {
+    display: none;
+  }
+  .messages {
+    width: 100vw;
+  }
+}

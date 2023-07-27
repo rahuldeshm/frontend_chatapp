@@ -1,6 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { io } from "socket.io-client";
 
-const initialState = { messages: [] };
+const socket = io("http://localhost:3001");
+
+const initialState = { messages: [], socket };
 
 const messageSlice = createSlice({
   name: "message",

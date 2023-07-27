@@ -6,37 +6,45 @@ import Messages from "./Messages";
 
 function Chat() {
   const [msg, setMsg] = useState("");
-  const token = useSelector((state) => state.auth.token.token);
+  const socket = useSelector((state) => state.message.socket);
+  // const token = useSelector((state) => state.auth.token.token);
   const dispatch = useDispatch();
+  // const sendMessage = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const res = await fetch("http://localhost:3001/message/newmessage", {
+  //       method: "POST",
+  //       body: JSON.stringify({ msg }),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         token,
+  //       },
+  //     });
+  //     const data = await res.json();
+  //     if (!res.ok) {
+  //       throw new Error(data.message);
+  //     } else {
+  //       console.log(data);
+  //       setMsg("");
+  //       dispatch(messageActions.addMessage(data));
+  //     }
+  //   } catch (err) {
+  //     console.log("working");
+  //     alert(err);
+  //   }
+  // };
   const sendMessage = async (e) => {
     e.preventDefault();
-    try {
-      const res = await fetch("http://localhost:3001/message/newmessage", {
-        method: "POST",
-        body: JSON.stringify({ msg }),
-        headers: {
-          "Content-Type": "application/json",
-          token,
-        },
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.message);
-      } else {
-        console.log(data);
-        setMsg("");
-        dispatch(messageActions.addMessage(data));
-      }
-    } catch (err) {
-      console.log("working");
-      alert(err);
-    }
+
+    dispatch(messageActions.addMessage({ msg, by: "you" }));
+    socket.emit("send", msg);
+    setMsg("");
   };
+
   return (
-    <div className={classes.div}>
-      <div>
-        <h1>What's up </h1>
-      </div>
+    <div className={classes.div1}>
+      <h1>Messages</h1>
+
       <div className={classes.messages}>
         <Messages />
       </div>
