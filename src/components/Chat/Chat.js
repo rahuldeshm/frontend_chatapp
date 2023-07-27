@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import classes from "./Chat.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { messageActions } from "../../store/messageSlice";
+import Messages from "./Messages";
 
 function Chat() {
   const [msg, setMsg] = useState("");
@@ -36,7 +37,9 @@ function Chat() {
       <div>
         <h1>What's up </h1>
       </div>
-      <div className={classes.messages}></div>
+      <div className={classes.messages}>
+        <Messages />
+      </div>
       <div className={classes.inputmessage}>
         <form className={classes.form} onSubmit={sendMessage}>
           <input

@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import Auth from "./components/Auth/Auth";
-import Chat from "./components/Chat/Chat";
+import Layout from "./components/Layout/Layout";
 
 function App() {
   const token = useSelector((state) => state.auth.token);
-  return <>{!!token ? <Chat /> : <Auth />}</>;
+  return <>{!!token ? <Layout /> : <Auth />}</>;
 }
 
 export default App;

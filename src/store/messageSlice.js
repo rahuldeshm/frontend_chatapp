@@ -9,6 +9,9 @@ const messageSlice = createSlice({
     addMessage(state, action) {
       state.messages = [...state.messages, action.payload];
     },
+    fetchedMessages(state, action) {
+      state.messages = action.payload;
+    },
   },
 });
 
