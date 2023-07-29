@@ -2,18 +2,27 @@
   display: flex;
 }
 .manu,
-.messages {
+.messages,
+.manuon,
+.messageon {
   box-sizing: border-box;
   width: 50vw;
   height: 100vh;
   padding: 0px;
   background-color: rgb(17, 27, 33);
 }
+.manu,
+.manuon {
+  border-right: 1px solid rgb(117, 116, 116);
+}
 @media screen and (max-width: 700px) {
-  .manu {
-    display: none;
-  }
-  .messages {
+  .manu,
+  .messageon {
     width: 100vw;
+    border: none;
+  }
+  .messages,
+  .manuon {
+    display: none;
   }
 }

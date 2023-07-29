@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import classes from "./Chat.module.css";
+import { MdExitToApp } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { messageActions } from "../../store/messageSlice";
 import Messages from "./Messages";
+import NewMessage from "./NewMessage";
+import { groupActions } from "../../store/groupSlice";
 
 function Chat() {
-  const [msg, setMsg] = useState("");
-  const socket = useSelector((state) => state.message.socket);
-  // const token = useSelector((state) => state.auth.token.token);
+  const token = useSelector((state) => state.auth.token.token);
+  const active = useSelector((state) => state.group.active);
   const dispatch = useDispatch();
-  // const sendMessage = async (e) => {
-  //   e.preventDefault();
+
+  // const fetchHandler = useCallback(async () => {
   //   try {
-  //     const res = await fetch("http://localhost:3001/message/newmessage", {
-  //       method: "POST",
-  //       body: JSON.stringify({ msg }),
+  //     const res = await fetch("http://localhost:3001/message/getmessages", {
+  //       method: "GET",
   //       headers: {
   //         "Content-Type": "application/json",
   //         token,
@@ -25,40 +26,32 @@ function Chat() {
   //       throw new Error(data.message);
   //     } else {
   //       console.log(data);
-  //       setMsg("");
-  //       dispatch(messageActions.addMessage(data));
+  //       dispatch(messageActions.fetchedMessages(data));
   //     }
   //   } catch (err) {
   //     console.log("working");
   //     alert(err);
   //   }
-  // };
-  const sendMessage = async (e) => {
-    e.preventDefault();
-
-    dispatch(messageActions.addMessage({ msg, by: "you" }));
-    socket.emit("send", msg);
-    setMsg("");
-  };
+  // }, [dispatch, token]);
+  // useEffect(() => {
+  //   fetchHandler();
+  // }, [fetchHandler]);
 
   return (
     <div className={classes.div1}>
-      <h1>Messages</h1>
+      <div className={classes.mainmanu}>
+        <MdExitToApp
+          size={40}
+          onClick={() => dispatch(groupActions.setOn(false))}
+          className={classes.ricon}
+        />
+        <h1>{active.name}</h1>
+      </div>
 
       <div className={classes.messages}>
         <Messages />
       </div>
-      <div className={classes.inputmessage}>
-        <form className={classes.form} onSubmit={sendMessage}>
-          <input
-            value={msg}
-            type="text"
-            onChange={(e) => setMsg(e.target.value)}
-            placeholder="Type a message"
-          />
-          <button type="submit">Send</button>
-        </form>
-      </div>
+      <NewMessage />
     </div>
   );
 }

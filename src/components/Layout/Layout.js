@@ -3,38 +3,22 @@ import classes from "./Layout.module.css";
 // import { useDispatch, useSelector } from "react-redux";
 // import { messageActions } from "../../store/messageSlice";
 import Socket from "../Chat/Socket";
+import Chatmanu from "../ChatManu.js/Chatmanu";
+import { useSelector } from "react-redux";
+// import { io } from "socket.io-client";
+// import { useEffect } from "react";
+// import { messageActions } from "../../store/messageSlice";
+// import { useDispatch, useSelector } from "react-redux";
 
 function Layout() {
-  // const token = useSelector((state) => state.auth.token.token);
-  // const dispatch = useDispatch();
-  // const fetchHandler = useCallback(async () => {
-  //   try {
-  //     const res = await fetch("http://localhost:3001/message/getmessages", {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         token,
-  //       },
-  //     });
-  //     const data = await res.json();
-  //     if (!res.ok) {
-  //       throw new Error(data.message);
-  //     } else {
-  //       console.log(data);
-  //       dispatch(messageActions.fetchedMessages(data));
-  //     }
-  //   } catch (err) {
-  //     console.log("working");
-  //     alert(err);
-  //   }
-  // }, [dispatch, token]);
-  // useEffect(() => {
-  //   fetchHandler();
-  // }, [fetchHandler]);
+  const on = useSelector((state) => state.group.on);
+
   return (
     <div className={classes.mainlay}>
-      <div className={classes.manu}>Chats</div>
-      <div className={classes.messages}>
+      <div className={on ? classes.manuon : classes.manu}>
+        <Chatmanu />
+      </div>
+      <div className={on ? classes.messageon : classes.messages}>
         <Socket />
       </div>
     </div>

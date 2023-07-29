@@ -1,0 +1,39 @@
+.md input {
+  width: 70%;
+  height: 20px;
+  background: #e0dede;
+  justify-content: center;
+  display: flex;
+  margin: 10px auto;
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+}
+.md button {
+  width: 65%;
+  height: 40px;
+  background: #573b8a;
+  color: #fff;
+  margin: 5px auto;
+  display: block;
+  padding: 6px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  outline: none;
+  transition: 0.3s ease-in;
+  cursor: pointer;
+}
+
+.user {
+  width: 70%;
+  height: 15rem;
+  margin: auto;
+  overflow-y: scroll;
+}
+.us {
+  width: 70%;
+  margin: auto;
+}

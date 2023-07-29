@@ -1,0 +1,12 @@
+.us {
+  display: flex;
+  background-color: gray;
+  margin-bottom: 3px;
+  justify-content: space-between;
+  padding: 5px;
+  border-radius: 5px;
+}
+.us p {
+  margin: 0px;
+  padding: 0px;
+}

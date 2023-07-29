@@ -4,10 +4,14 @@ import classes from "./Chat.module.css";
 
 function Messages() {
   const messages = useSelector((state) => state.message.messages);
+  const username = useSelector((state) => state.auth.token.username);
   const mess = messages.map((e) => {
     return (
-      <p key={`${Math.random()}`} className={classes[e.by]}>
-        {`${e.by}: ${e.msg}`}
+      <p
+        key={`${Math.random()}`}
+        className={classes[e.user.username === username ? "you" : "other"]}
+      >
+        {`${e.user.username === username ? "you" : e.user.username}: ${e.msg}`}
       </p>
     );
   });

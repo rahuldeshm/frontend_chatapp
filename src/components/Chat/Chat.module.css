@@ -5,9 +5,20 @@
   background-color: #068258;
   text-align: center;
 }
-.div1 h1 {
+.mainmanu {
+  height: 5rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+  align-items: center;
+}
+.ricon {
+  rotate: 180deg;
+  cursor: pointer;
+}
+h1 {
   margin: 0px;
-  padding: 1rem;
+  padding: 0px;
 }
 .messages {
   box-sizing: border-box;
@@ -46,6 +57,7 @@
   color: #f4f4f4;
   background-color: black;
   border-radius: 10px;
+  cursor: pointer;
 }
 .ebtn,
 .dbtn {
@@ -64,13 +76,18 @@
   background-color: #06c2f6;
 }
 .you {
+  border-radius: 5px;
+  padding: 3px;
   background-color: #06c2f6;
   margin-left: 36%;
 }
-.joined {
+.joined,
+.left {
   color: white;
 }
 .other {
+  border-radius: 5px;
+  padding: 3px;
   background-color: #f4f4f4;
   width: 60%;
 }
