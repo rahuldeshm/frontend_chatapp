@@ -7,14 +7,18 @@ import { messageActions } from "../../store/messageSlice";
 function GroupItem(props) {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token.token);
+
   const fetchGroupMessages = async () => {
-    dispatch(groupActions.setActive(props.e));
-    console.log(props.e.id);
+    const locm = JSON.parse(localStorage.getItem(`${props.e.id}group`));
+    const locmp = !!locm ? locm : [];
+    const haveId = locmp.length > 0 ? locmp[locmp.length - 1].id : 0;
+
     try {
       const res = await fetch(
         `http://localhost:3001/message/getmessages/${props.e.id}`,
         {
-          method: "GET",
+          method: "POST",
+          body: JSON.stringify({ haveId }),
           headers: {
             "Content-Type": "application/json",
             token,
@@ -25,8 +29,12 @@ function GroupItem(props) {
       if (!res.ok) {
         throw new Error(data.message);
       } else {
-        console.log(data);
-        dispatch(messageActions.fetchedMessages(data));
+        dispatch(groupActions.setActive(props.e));
+        dispatch(messageActions.fetchedMessages([...locmp, ...data]));
+        localStorage.setItem(
+          `${props.e.id}group`,
+          JSON.stringify([...locmp, ...data])
+        );
       }
     } catch (err) {
       alert(err);

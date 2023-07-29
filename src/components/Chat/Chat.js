@@ -2,6 +2,7 @@ import React, { useCallback, useEffect } from "react";
 import classes from "./Chat.module.css";
 import { MdExitToApp } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { messageActions } from "../../store/messageSlice";
 import Messages from "./Messages";
 import NewMessage from "./NewMessage";
@@ -46,6 +47,7 @@ function Chat() {
           className={classes.ricon}
         />
         <h1>{active.name}</h1>
+        <BsThreeDotsVertical size={30} />
       </div>
 
       <div className={classes.messages}>
