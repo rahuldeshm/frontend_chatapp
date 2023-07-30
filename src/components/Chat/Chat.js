@@ -1,17 +1,18 @@
-import React, { useCallback, useEffect } from "react";
+import GroupManu from "../UI/GroupManu";
 import classes from "./Chat.module.css";
 import { MdExitToApp } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { messageActions } from "../../store/messageSlice";
 import Messages from "./Messages";
 import NewMessage from "./NewMessage";
 import { groupActions } from "../../store/groupSlice";
+import { useState } from "react";
 
 function Chat() {
-  const token = useSelector((state) => state.auth.token.token);
   const active = useSelector((state) => state.group.active);
   const dispatch = useDispatch();
+
+  const [manu, setmanu] = useState(false);
 
   // const fetchHandler = useCallback(async () => {
   //   try {
@@ -47,13 +48,15 @@ function Chat() {
           className={classes.ricon}
         />
         <h1>{active.name}</h1>
-        <BsThreeDotsVertical size={30} />
+        <BsThreeDotsVertical size={30} onClick={() => setmanu(!manu)} />
       </div>
 
       <div className={classes.messages}>
         <Messages />
       </div>
       <NewMessage />
+
+      {manu && <GroupManu onClick={() => setmanu(!manu)} manu={manu} />}
     </div>
   );
 }

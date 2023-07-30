@@ -23,6 +23,21 @@ const groupSlice = createSlice({
       state.active = action.payload;
       state.on = true;
     },
+    removeGroup(state, action) {
+      const g = [...state.groups];
+      const fg = g.filter((e) => e.id !== action.payload);
+      state.groups = fg;
+      state.active = {};
+      state.on = false;
+    },
+    changeName(state, action) {
+      const a = { ...state.active };
+      a.name = action.payload.name;
+      const g = [...state.groups];
+      const fg = g.map((e) => (e.id !== action.payload.id ? e : a));
+      state.active = a;
+      state.groups = fg;
+    },
   },
 });
 

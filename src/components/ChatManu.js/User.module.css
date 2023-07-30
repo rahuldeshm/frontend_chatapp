@@ -1,6 +1,6 @@
 .us {
   display: flex;
-  background-color: gray;
+  background-color: rgb(161, 158, 158);
   margin-bottom: 3px;
   justify-content: space-between;
   padding: 5px;
@@ -9,4 +9,21 @@
 .us p {
   margin: 0px;
   padding: 0px;
+}
+.use,
+.ause {
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(161, 158, 158);
+  width: 45%;
+  height: 2rem;
+  margin: 3px;
+}
+.ause {
+  background-color: green;
+}
+.ico {
+  color: rgb(226, 5, 97);
 }

@@ -1,46 +1,38 @@
-import React, { useCallback, useEffect, useState } from "react";
-import Modal from "../UI/Modal";
-import classes from "./NewGroup.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { groupActions } from "../../store/groupSlice";
-import User from "./User";
-import AddedUser from "./AddedUser";
+import React, { useState } from "react";
+import Modal from "../../UI/Modal";
+import classes from "./EditGroup.module.css";
+import { useSelector } from "react-redux";
+import User from "./../User";
+import AddedUser from "../AddedUser";
 
-function NewGroup(props) {
+function EditGroup(props) {
   const [entered, setEntered] = useState("");
-  const [added, setAdded] = useState([]);
-  const [users, setUsers] = useState([]);
-  const dispatch = useDispatch();
+  const [added, setAdded] = useState(
+    props.users.filter((e) => e.usergroup.isAdmin)
+  );
+  const [users, setUsers] = useState(
+    props.users.filter((e) => !e.usergroup.isAdmin)
+  );
   const token = useSelector((state) => state.auth.token.token);
-  const userFetch = useCallback(async () => {
+
+  const editAdmins = async () => {
+    const admins = added.map((e) => {
+      const c = { ...e };
+      c.isAdmin = true;
+      return c;
+    });
+    const other = users.map((e) => {
+      const c = { ...e };
+      c.isAdmin = false;
+      return c;
+    });
     try {
-      const res = await fetch("http://localhost:3001/group/users", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          token,
-        },
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.message);
-      } else {
-        setUsers(data);
-      }
-    } catch (err) {
-      console.log(err);
-      alert(err.message);
-    }
-  }, []);
-  useEffect(() => {
-    userFetch();
-  }, []);
-  const newGroupHandler = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await fetch("http://localhost:3001/group/add", {
+      const res = await fetch("http://localhost:3001/group/editadmins", {
         method: "POST",
-        body: JSON.stringify({ name: e.target.text.value, userId: added }),
+        body: JSON.stringify({
+          groupId: props.groupId,
+          userId: [...admins, ...other],
+        }),
         headers: {
           "Content-Type": "application/json",
           token,
@@ -52,9 +44,7 @@ function NewGroup(props) {
         throw new Error(data.message);
       } else {
         console.log(data);
-        dispatch(
-          groupActions.addGroup({ name: e.target.text.value, id: data.id })
-        );
+        alert("Admins edited SUCCESSFULLY");
         props.onClick();
       }
     } catch (err) {
@@ -76,15 +66,6 @@ function NewGroup(props) {
     setUsers([...users, e]);
   };
 
-  const makeAdmin = (e) => {
-    const updatede = { ...e };
-    updatede.isAdmin = !!!updatede.isAdmin;
-    const ad = added.map((e) => {
-      return e.id !== updatede.id ? e : updatede;
-    });
-    console.log(".....", ad);
-    setAdded(ad);
-  };
   const filteredUsers = users.filter((user) => {
     const usernameContainsText = user.username
       .toLowerCase()
@@ -97,7 +78,7 @@ function NewGroup(props) {
   return (
     <Modal onClick={props.onClick}>
       <div className={classes.md}>
-        <h4 style={{ textAlign: "center" }}>New Group</h4>
+        <h4 style={{ textAlign: "center" }}>Select Users to Make Admin</h4>
         <input
           value={entered}
           type="text"
@@ -117,19 +98,17 @@ function NewGroup(props) {
               <AddedUser
                 key={Math.random()}
                 e={e}
-                onClick={() => makeAdmin(e)}
+                onClick={() => console.log("")}
                 onBack={() => backAdmin(e)}
               />
             );
           })}
         </div>
-        <form onSubmit={newGroupHandler}>
-          <input type="text" name="text" placeholder="Name of Group" required />
-          <button type="submit">Create New Group</button>
-        </form>
+
+        <button onClick={() => editAdmins()}>Save</button>
       </div>
     </Modal>
   );
 }
 
-export default NewGroup;
+export default EditGroup;
