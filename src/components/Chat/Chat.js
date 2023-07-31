@@ -7,7 +7,6 @@ import Messages from "./Messages";
 import NewMessage from "./NewMessage";
 import { groupActions } from "../../store/groupSlice";
 import { useEffect, useState } from "react";
-import { messageActions } from "../../store/messageSlice";
 
 function Chat() {
   const activeid = useSelector((state) => state.group.active.id);
@@ -22,13 +21,7 @@ function Chat() {
       socket.emit("leaveroom", `${activeid}this`);
     };
   }, [activeid, socket]);
-  socket.on("becamelive", (e) => {
-    dispatch(messageActions.addMessage(e));
-  });
-  socket.on("receive", (e) => {
-    console.log(">>>>>>>>>>>");
-    dispatch(messageActions.addMessage(e));
-  });
+
   return (
     <div className={classes.div1}>
       <div className={classes.mainmanu}>

@@ -1,12 +1,11 @@
 // import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
 import Chat from "./Chat";
 import Banner from "./Banner";
-// import { useDispatch, useSelector } from "react-redux";
-// import { messageActions } from "../../store/messageSlice";
+import { useSelector } from "react-redux";
 
 function Socket() {
   const on = useSelector((state) => state.group.on);
+
   // const dispatch = useDispatch();
   // const socket = useSelector((state) => state.auth.socket);
   // const username = useSelector((state) => state.auth.token.username);

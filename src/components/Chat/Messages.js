@@ -5,12 +5,16 @@ import classes from "./Chat.module.css";
 function Messages() {
   const messages = useSelector((state) => state.message.messages);
   const username = useSelector((state) => state.auth.token.username);
+
   const mess = messages.map((e) => {
     return (
       <p
         key={`${Math.random()}`}
         className={classes[e.user.username === username ? "you" : "other"]}
       >
+        {!!e.url && (
+          <img src={e.url} style={{ width: "100%" }} alt="received snap" />
+        )}
         {`${e.user.username === username ? "you" : e.user.username}: ${e.msg}`}
       </p>
     );
