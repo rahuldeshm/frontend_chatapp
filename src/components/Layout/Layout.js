@@ -1,17 +1,18 @@
-// import React, { useCallback, useEffect } from "react";
 import classes from "./Layout.module.css";
-// import { useDispatch, useSelector } from "react-redux";
-// import { messageActions } from "../../store/messageSlice";
 import Socket from "../Chat/Socket";
 import Chatmanu from "../ChatManu.js/Chatmanu";
-import { useSelector } from "react-redux";
-// import { io } from "socket.io-client";
-// import { useEffect } from "react";
-// import { messageActions } from "../../store/messageSlice";
-// import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { authActions } from "../../store/authSlice";
 
 function Layout() {
   const on = useSelector((state) => state.group.on);
+  // const dispatch = useDispatch();
+  // useEffect(() => {
+  //   socket.on("connect", () => {
+  //     dispatch(authActions.updateSocket({ id: socket.id, connected: true }));
+  //   });
+  // }, [dispatch]);
 
   return (
     <div className={classes.mainlay}>

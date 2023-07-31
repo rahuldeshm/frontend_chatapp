@@ -9,8 +9,11 @@ function NewMessage() {
   const token = useSelector((state) => state.auth.token.token);
   const username = useSelector((state) => state.auth.token.username);
   const groupId = useSelector((state) => state.group.active.id);
+  const socket = useSelector((state) => state.auth.socket);
+
   const sendMessage = async (e) => {
     e.preventDefault();
+    socket.emit("send", msg, `${groupId}this`);
     try {
       const res = await fetch("http://localhost:3001/message/newmessage", {
         method: "POST",

@@ -1,14 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import { io } from "socket.io-client";
-
+import { io } from "socket.io-client";
 const token = JSON.parse(localStorage.getItem("token"));
-// const socket = io("http://localhost:3001", {
-//   auth: token,
-// });
-
+const socket = io("http://localhost:3001", {
+  auth: token,
+});
 const initialState = {
   token,
-  // socket,
+  socket: socket,
 };
 
 const authSlice = createSlice({

@@ -21,7 +21,6 @@ function Groups() {
       if (!res.ok) {
         throw new Error(data.message);
       } else {
-        console.log(">>>>>", data);
         dispatch(groupActions.addGroups(data));
       }
     } catch (err) {

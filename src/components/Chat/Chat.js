@@ -6,39 +6,29 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import Messages from "./Messages";
 import NewMessage from "./NewMessage";
 import { groupActions } from "../../store/groupSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { messageActions } from "../../store/messageSlice";
 
 function Chat() {
-  const active = useSelector((state) => state.group.active);
+  const activeid = useSelector((state) => state.group.active.id);
+  const activename = useSelector((state) => state.group.active.name);
   const dispatch = useDispatch();
-
   const [manu, setmanu] = useState(false);
+  const socket = useSelector((state) => state.auth.socket);
 
-  // const fetchHandler = useCallback(async () => {
-  //   try {
-  //     const res = await fetch("http://localhost:3001/message/getmessages", {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         token,
-  //       },
-  //     });
-  //     const data = await res.json();
-  //     if (!res.ok) {
-  //       throw new Error(data.message);
-  //     } else {
-  //       console.log(data);
-  //       dispatch(messageActions.fetchedMessages(data));
-  //     }
-  //   } catch (err) {
-  //     console.log("working");
-  //     alert(err);
-  //   }
-  // }, [dispatch, token]);
-  // useEffect(() => {
-  //   fetchHandler();
-  // }, [fetchHandler]);
-
+  useEffect(() => {
+    socket.emit("createroom", `${activeid}this`);
+    return () => {
+      socket.emit("leaveroom", `${activeid}this`);
+    };
+  }, [activeid, socket]);
+  socket.on("becamelive", (e) => {
+    dispatch(messageActions.addMessage(e));
+  });
+  socket.on("receive", (e) => {
+    console.log(">>>>>>>>>>>");
+    dispatch(messageActions.addMessage(e));
+  });
   return (
     <div className={classes.div1}>
       <div className={classes.mainmanu}>
@@ -47,7 +37,7 @@ function Chat() {
           onClick={() => dispatch(groupActions.setOn(false))}
           className={classes.ricon}
         />
-        <h1>{active.name}</h1>
+        <h1>{activename}</h1>
         <BsThreeDotsVertical size={30} onClick={() => setmanu(!manu)} />
       </div>
 
